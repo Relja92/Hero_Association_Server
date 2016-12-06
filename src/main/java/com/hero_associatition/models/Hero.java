@@ -1,5 +1,6 @@
 package com.hero_associatition.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,6 +13,9 @@ public class Hero {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(unique=true)
+    private String email;
     private String name;
     private String alias;
     private String race;
@@ -20,6 +24,16 @@ public class Hero {
     private String level;
     private String rank;
     private String password;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole( String role ) {
+        this.role = role;
+    }
+
     public Hero() {
     //JPA only
     }
@@ -30,6 +44,10 @@ public class Hero {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getEmail() { return email;}
+
+    public void setEmail( String email ) {this.email = email;}
 
     public String getName() {
         return name;

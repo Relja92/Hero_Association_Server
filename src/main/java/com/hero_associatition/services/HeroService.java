@@ -2,6 +2,7 @@ package com.hero_associatition.services;
 
 import com.hero_associatition.models.Hero;
 import com.hero_associatition.repositories.HeroRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 
@@ -13,9 +14,11 @@ public class HeroService {
     @Inject
     HeroRepository heroRepository;
 
-    public void createHero(String name, String alias, String race, Integer age, String location, String level, String rank,String password ) throws  Exception{
+    @Inject
+    PasswordEncoder passwordEncoder;
+    public void createHero(String email, String name, String alias, String race, Integer age, String location, String level, String rank,String password ) throws  Exception{
         final Hero hero = new Hero();
-
+        hero.setEmail(email);
         hero.setName(name);
         hero.setAlias(alias);
         hero.setRace(race);
@@ -23,17 +26,20 @@ public class HeroService {
         hero.setLocation(location);
         hero.setLevel(level);
         hero.setRank(rank);
-        hero.setPassword(password);
+        hero.setRole("ROLE_HERO");
+        hero.setPassword(passwordEncoder.encode(password));
         heroRepository.save(hero);
         
     }
 
-    public void editHero(Long id, String name, String alias, String race, Integer age, String location, String level, String rank,String password ) throws Exception {
+    public void editHero(Long id, String email,  String name, String alias, String race, Integer age, String location, String level, String rank) throws Exception {
         final Hero hero = heroRepository.findOne(id);
 
         if(hero == null){
             throw new Exception();
         }
+
+        hero.setEmail(email);
         hero.setName(name);
         hero.setAlias(alias);
         hero.setRace(race);
@@ -41,7 +47,6 @@ public class HeroService {
         hero.setLocation(location);
         hero.setLevel(level);
         hero.setRank(rank);
-        hero.setPassword(password);
         heroRepository.save(hero);
     }
 

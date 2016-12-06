@@ -1,5 +1,6 @@
 package com.hero_associatition.controllers;
 
+import com.hero_associatition.dto.HeroDTO;
 import com.hero_associatition.models.Hero;
 import com.hero_associatition.repositories.HeroRepository;
 import com.hero_associatition.services.HeroService;
@@ -42,9 +43,9 @@ public class HeroRestController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<Void> addHero( @RequestBody @Valid Hero hero){
+    public ResponseEntity<Void> addHero( @RequestBody @Valid HeroDTO hero){
         try {
-            heroService.createHero(hero.getName(), hero.getAlias(), hero.getRace(), hero.getAge(), hero.getLocation(), hero.getLevel(), hero.getRank(), hero.getPassword());
+            heroService.createHero(hero.getEmail(),hero.getName(), hero.getAlias(), hero.getRace(), hero.getAge(), hero.getLocation(), hero.getLevel(), hero.getRank(), hero.getPassword());
         }catch (Exception e){
             throw new Error();
         }
@@ -55,7 +56,7 @@ public class HeroRestController {
     public Hero updateHero(@RequestBody @Valid Hero hero, @PathVariable Long heroId){
         hero.setId(heroId);
         try {
-            heroService.editHero(heroId,hero.getName(), hero.getAlias(), hero.getRace(), hero.getAge(), hero.getLocation(), hero.getLevel(), hero.getRank(), hero.getPassword());
+            heroService.editHero(heroId, hero.getEmail(), hero.getName(), hero.getAlias(), hero.getRace(), hero.getAge(), hero.getLocation(), hero.getLevel(), hero.getRank());
         }catch (Exception e){
             throw new Error();
         }
