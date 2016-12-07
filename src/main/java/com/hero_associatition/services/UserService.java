@@ -18,21 +18,21 @@ public class UserService {
 
     @Inject
     PasswordEncoder passwordEncoder;
-    public void createUser(String email, String name, String alias, String race, Integer age, String location, String level, String rank,String password ) throws  Exception{
-        final User user = new User();
-        user.setEmail(email);
-        user.setName(name);
-        user.setAlias(alias);
-        user.setRace(race);
-        user.setAge(age);
-        user.setLocation(location);
-        user.setLevel(level);
-        user.setRank(rank);
-        user.setRole(Role.ROLE_HERO);
-        user.setPassword(passwordEncoder.encode(password));
-        userRepository.save(user);
-        
-    }
+//    public void createUser(String email, String name, String alias, String race, Integer age, String location, String level, String rank,String password ) throws  Exception{
+//        final User user = new User();
+//        user.setEmail(email);
+//        user.setName(name);
+//        user.setAlias(alias);
+//        user.setRace(race);
+//        user.setAge(age);
+//        user.setLocation(location);
+//        user.setLevel(level);
+//        user.setRank(rank);
+//        user.setRole(Role.ROLE_HERO);
+//        user.setPassword(passwordEncoder.encode(password));
+//        userRepository.save(user);
+//
+//    }
 
     public void editUser(Long id, String email,  String name, String alias, String race, Integer age, String location, String level, String rank) throws Exception {
         final User user = userRepository.findOne(id);

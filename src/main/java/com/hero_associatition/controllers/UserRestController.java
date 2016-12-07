@@ -38,7 +38,7 @@ public class UserRestController {
 
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET, produces = "application/json")
-    @PreAuthorize("hasAuthority('ROLE_HERO')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> getSingle( @PathVariable Long userId) throws Exception {
         try{
             return ResponseEntity.ok(this.userRepository.findOne(userId));
@@ -48,26 +48,8 @@ public class UserRestController {
 
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<Void> addUser( @RequestBody @Valid UserDTO user) throws Exception {
-        try {
-            userService.createUser(user.getEmail(),user.getName(), user.getAlias(), user.getRace(), user.getAge(), user.getLocation(), user.getLevel(), user.getRank(), user.getPassword());
-        }catch (Exception e){
-            throw new Exception();
-        }
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @RequestMapping(value = "/findByEmail", method = RequestMethod.GET, produces = "application/json")
-    public User findByEmail(){
-        try {
-            return this.userRepository.findByEmail("markoreljic1@mail.com");
-        }catch (Exception e){
-            throw new Error();
-        }
-    }
-
     @RequestMapping(value = "/update/{userId}", method = RequestMethod.PUT, consumes = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public User updateHero(@RequestBody @Valid User user, @PathVariable Long userId){
         user.setId(userId);
         try {
@@ -78,6 +60,7 @@ public class UserRestController {
         return user;
     }
     @RequestMapping(value = "/delete/{userId}", method = RequestMethod.DELETE, consumes = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUser( @PathVariable Long userId) {
         try{
             userService.deleteUser(userId);

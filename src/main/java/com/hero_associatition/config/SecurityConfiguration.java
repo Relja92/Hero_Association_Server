@@ -45,8 +45,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().headers().frameOptions().disable().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterBefore(new JWTFilter(customProperties.getSecretKey()), UsernamePasswordAuthenticationFilter.class);
-
-        http.authorizeRequests().antMatchers("/management/**").hasAuthority("ROLE_UNAUTHORIZED");
     }
 
 }
