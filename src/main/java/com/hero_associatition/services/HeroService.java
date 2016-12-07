@@ -1,6 +1,7 @@
 package com.hero_associatition.services;
 
 import com.hero_associatition.models.Hero;
+import com.hero_associatition.models.enumerations.Role;
 import com.hero_associatition.repositories.HeroRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class HeroService {
         hero.setLocation(location);
         hero.setLevel(level);
         hero.setRank(rank);
-        hero.setRole("ROLE_HERO");
+        hero.setRole(Role.ROLE_HERO);
         hero.setPassword(passwordEncoder.encode(password));
         heroRepository.save(hero);
         

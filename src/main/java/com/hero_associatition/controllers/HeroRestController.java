@@ -33,23 +33,32 @@ public class HeroRestController {
     }
 
     @RequestMapping(value = "/{heroId}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<Hero> getHero( @PathVariable Long heroId){
+    public ResponseEntity<Hero> getHero( @PathVariable Long heroId) throws Exception {
         try{
             return ResponseEntity.ok(this.heroRepository.findOne(heroId));
         }catch (Exception e){
-            throw new Error();
+            throw new Exception();
         }
 
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<Void> addHero( @RequestBody @Valid HeroDTO hero){
+    public ResponseEntity<Void> addHero( @RequestBody @Valid HeroDTO hero) throws Exception {
         try {
             heroService.createHero(hero.getEmail(),hero.getName(), hero.getAlias(), hero.getRace(), hero.getAge(), hero.getLocation(), hero.getLevel(), hero.getRank(), hero.getPassword());
         }catch (Exception e){
-            throw new Error();
+            throw new Exception();
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/findByEmail", method = RequestMethod.GET, produces = "application/json")
+    public Hero findByEmail(){
+        try {
+            return this.heroRepository.findByEmail("markoreljic1@mail.com");
+        }catch (Exception e){
+            throw new Error();
+        }
     }
 
     @RequestMapping(value = "/update/{heroId}", method = RequestMethod.PUT, consumes = "application/json")

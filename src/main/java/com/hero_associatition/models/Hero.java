@@ -1,9 +1,9 @@
 package com.hero_associatition.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.hero_associatition.models.enumerations.Role;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by markoreljic on 1.12.16..
@@ -16,6 +16,7 @@ public class Hero {
 
     @Column(unique=true)
     private String email;
+
     private String name;
     private String alias;
     private String race;
@@ -24,13 +25,17 @@ public class Hero {
     private String level;
     private String rank;
     private String password;
-    private String role;
 
-    public String getRole() {
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
+
+    public Role getRole() {
         return role;
     }
 
-    public void setRole( String role ) {
+    public void setRole( Role role ) {
         this.role = role;
     }
 
@@ -112,10 +117,5 @@ public class Hero {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
-
-
-
 
 }
