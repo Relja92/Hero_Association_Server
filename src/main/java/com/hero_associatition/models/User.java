@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
  * Created by markoreljic on 1.12.16..
  */
 @Entity
-public class Hero {
+public class User {
     @Id
     @GeneratedValue
     private Long id;
@@ -39,7 +39,7 @@ public class Hero {
         this.role = role;
     }
 
-    public Hero() {
+    public User() {
     //JPA only
     }
     public Long getId() {
@@ -117,5 +117,6 @@ public class Hero {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
 }

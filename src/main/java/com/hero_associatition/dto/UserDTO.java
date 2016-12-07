@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 /**
  * Created by markoreljic on 2.12.16..
  */
-public class HeroDTO {
+public class UserDTO {
 
     private Long id;
 

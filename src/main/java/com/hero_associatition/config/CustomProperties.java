@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @ConfigurationProperties(prefix = "custom", ignoreUnknownFields = false)
 public class CustomProperties {
 
-    private String secretKey= "markoreljic992";
+    private String secretKey = "markoreljic992";
 
     public String getSecretKey() {
         return secretKey;
