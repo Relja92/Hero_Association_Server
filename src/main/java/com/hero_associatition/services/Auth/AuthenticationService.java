@@ -2,6 +2,7 @@ package com.hero_associatition.services.Auth;
 
 import com.hero_associatition.config.CustomProperties;
 import com.hero_associatition.dto.LoginResponse;
+import com.hero_associatition.exceptions.AuthenticationError;
 import com.hero_associatition.models.User;
 import com.hero_associatition.models.enumerations.Role;
 import com.hero_associatition.repositories.UserRepository;
@@ -31,12 +32,12 @@ public class AuthenticationService {
         final Optional<User> optionalUser = this.userRepository.findByEmailPresent(email);
 
         if(optionalUser == null){
-            throw new Error("Credentials are invalid!");
+            throw new Exception();
         }
         final User user = this.userRepository.findByEmail(email);
 
         if (!passwordEncoder.matches(password, user.getPassword()))
-            throw new Error("Credentials are invalid!");
+            throw new Exception();
 
         final LoginResponse response = new LoginResponse();
         final String accessToken = JWTUtils.createToken(user.getId(), user.getRole(), customProperties.getSecretKey());
@@ -46,17 +47,14 @@ public class AuthenticationService {
         response.setLocation(user.getLocation());
         response.setAge(user.getAge());
         response.setId(user.getId());
-        response.setRank(user.getRank());
         response.setRole(user.getRole());
-        response.setLevel(user.getLevel());
-
 
         return response;
 
     }
 
 
-    public LoginResponse register( String email, String name, String alias, String race, Integer age, String location, String level, String rank, String password ) throws  Exception{
+    public LoginResponse register( String email, String name, String alias, String race, Integer age, String location, String password ) throws  Exception{
 
         final Optional<User> optionalUser = this.userRepository.findByEmailPresent(email);
 
@@ -70,10 +68,15 @@ public class AuthenticationService {
         user.setRace(race);
         user.setAge(age);
         user.setLocation(location);
-        user.setLevel(level);
-        user.setRank(rank);
+        user.setLevel(1);
+        user.setExperience(0);
+        user.setGold(100);
         user.setRole(Role.ROLE_HERO);
         user.setPassword(passwordEncoder.encode(password));
+        user.setAttack(5);
+        user.setDefense(5);
+        user.setAgility(5);
+        user.setLuck(5);
         userRepository.save(user);
 
         return null;

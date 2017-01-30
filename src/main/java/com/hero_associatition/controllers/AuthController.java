@@ -3,6 +3,7 @@ package com.hero_associatition.controllers;
 import com.hero_associatition.dto.LoginRequest;
 import com.hero_associatition.dto.LoginResponse;
 import com.hero_associatition.dto.UserDTO;
+import com.hero_associatition.exceptions.AuthenticationError;
 import com.hero_associatition.models.User;
 import com.hero_associatition.services.Auth.AuthenticationService;
 import org.springframework.http.MediaType;
@@ -29,16 +30,20 @@ public class AuthController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<LoginResponse> login( @Valid @RequestBody LoginRequest request) throws Exception {
+        try{
+            final LoginResponse response = authenticationService.login(request.getEmail(), request.getPassword());
+            return ResponseEntity.ok().body(response);
+        } catch(Exception e){
+            throw new AuthenticationError("credentials.invalid", "Credentials are invalid!");
+        }
 
-        final LoginResponse response = authenticationService.login(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok().body(response);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<LoginResponse> signIn( @Valid @RequestBody UserDTO user) throws Exception {
         try{
-            final LoginResponse response = authenticationService.register(user.getEmail(),user.getName(), user.getAlias(), user.getRace(), user.getAge(), user.getLocation(), user.getLevel(), user.getRank(), user.getPassword());
+            final LoginResponse response = authenticationService.register(user.getEmail(),user.getName(), user.getAlias(), user.getRace(), user.getAge(), user.getLocation(),user.getPassword());
             return ResponseEntity.ok().body(response);
         } catch(Exception e){
             throw new Error("Email Already registered");

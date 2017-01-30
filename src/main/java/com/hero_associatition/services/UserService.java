@@ -34,7 +34,7 @@ public class UserService {
 //
 //    }
 
-    public void editUser(Long id, String email,  String name, String alias, String race, Integer age, String location, String level, String rank) throws Exception {
+    public void editUser(Long id, String email,  String name, String alias, String race, Integer age, String location) throws Exception {
         final User user = userRepository.findOne(id);
 
         if(user == null){
@@ -47,8 +47,6 @@ public class UserService {
         user.setRace(race);
         user.setAge(age);
         user.setLocation(location);
-        user.setLevel(level);
-        user.setRank(rank);
         userRepository.save(user);
     }
 

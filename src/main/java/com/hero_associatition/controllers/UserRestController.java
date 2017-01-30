@@ -53,7 +53,7 @@ public class UserRestController {
     public User updateHero(@RequestBody @Valid User user, @PathVariable Long userId){
         user.setId(userId);
         try {
-            userService.editUser(userId, user.getEmail(), user.getName(), user.getAlias(), user.getRace(), user.getAge(), user.getLocation(), user.getLevel(), user.getRank());
+            userService.editUser(userId, user.getEmail(), user.getName(), user.getAlias(), user.getRace(), user.getAge(), user.getLocation());
         }catch (Exception e){
             throw new Error();
         }
